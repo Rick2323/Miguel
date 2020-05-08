@@ -20,7 +20,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		GameBoard coisa = new GameBoard();
-
 		coisa.print();
 		
 		System.out.println();
@@ -50,6 +49,6 @@ public class Main {
 		System.out.println();
 		new Block_Tbig().printBody();
 		System.out.println();
-		new Block_Qbig().printBody();
+		new Block_Qbig().printBody();	
 	}
 }
