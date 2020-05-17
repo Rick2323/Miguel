@@ -1,6 +1,6 @@
 package Blocks;
 
-abstract class Shape {
+abstract class Shape implements IShape{
 
 	private Object[][] shape;
 

@@ -1,4 +1,5 @@
 package Logic;
+
 import java.util.Arrays;
 
 public class BigSquare {
@@ -8,20 +9,16 @@ public class BigSquare {
 	private Object[][] board;
 
 	public BigSquare() {
-		
+
 		board = new Object[SQUARE_SIZE][SQUARE_SIZE];
 
-		// fill array
-		/*for (Object[] row: board)
-		    Arrays.fill(row, true);*/
-		
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board.length; j++) {
-				//board[i][j] = Utils.getBosta();
+				// board[i][j] = Utils.getBosta();
 				board[i][j] = false;
 			}
 		}
-		
+
 	}
 
 	public boolean rowIsComplete(int index) {
@@ -49,18 +46,18 @@ public class BigSquare {
 
 		return true;
 	}
-	
+
 	public boolean squareIsComplete() {
-		
+
 		for (int i = 0; i < board.length; i++) {
 			if (!rowIsComplete(i)) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	// Private Methods
 
 	private Object[] getRow(int index) {
@@ -78,11 +75,11 @@ public class BigSquare {
 		}
 		return column;
 	}
-	
+
 	// Prints
-	
+
 	public void printBody() {
-		
+
 		for (int i = 0; i < board.length; i++) {
 			printRow(i);
 			System.out.println();
@@ -100,9 +97,9 @@ public class BigSquare {
 			} else {
 				str += "|#";
 			}
-			
-//			para mostar o conteúdo
-//			str += "|" + row[i];
+
+			// para mostar o conteúdo
+			// str += "|" + row[i];
 		}
 
 		System.out.print(str);
