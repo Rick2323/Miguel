@@ -28,26 +28,14 @@ public class Main {
         //coisa.print();
         IShape shapeJ = new Block_Tbig();
 
-        
-        
-        shapeJ.printBody();
-        System.out.println(shapeJ.getAnchorRow());
-        System.out.println();
-        
         shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
-        shapeJ.printBody();
-        System.out.println(shapeJ.getAnchorRow());
-        System.out.println();
-        
         shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
-        shapeJ.printBody();
-        System.out.println(shapeJ.getAnchorRow());
-        System.out.println();
-        
         shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
-        shapeJ.printBody();
-        System.out.println(shapeJ.getAnchorRow());
-        System.out.println();
+        
+        coisa.placeBlock(shapeJ, "D5");
+        coisa.print();
+        
+        
 
 //		System.out.println();
 //		new Block_I().printBody();

@@ -1,5 +1,6 @@
 package Logic;
 
+import Blocks.IShape;
 import java.util.Arrays;
 
 public class GameBoard {
@@ -77,17 +78,13 @@ public class GameBoard {
         }
     }
 
-    public void fillElement(String matrixPosition) {
+    private  void fillElement(int matrixPositionRow, int matrixPositionColumn) {
 
-        int matrixPositionRow = getRowFromMatrixPosition(matrixPosition);
-        int matrixPositionColumn = getColumnFromMatrixPosition(matrixPosition);
-        
         int row = matrixPositionRow / 3;
         int column = matrixPositionColumn / 3;
 
         board[row][column].fillElement(matrixPositionRow, matrixPositionColumn);
-        
-        
+
     }
 
     private int getRowFromMatrixPosition(String matrixPosition) {//buscar a linha da string A3
@@ -102,6 +99,24 @@ public class GameBoard {
 
         return matrixPosition.charAt(0) - a;
     }
-    
-    
+
+    public void placeBlock(IShape shape, String matrixPosition) {
+
+        Object[][] shapeMatrix = shape.getShape();
+
+        int anchorRow = shape.getAnchorRow();
+
+        int matrixPositionRow = getRowFromMatrixPosition(matrixPosition);
+        int matrixPositionColumn = getColumnFromMatrixPosition(matrixPosition);
+        
+        for (int i = 0; i < shapeMatrix.length; i++) {
+            for (int j = 0; j < shapeMatrix[0].length; j++) {
+              if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE)){
+                  
+              }else{
+                  fillElement((matrixPositionRow - anchorRow + i), (matrixPositionColumn + j));
+              }
+            }
+        }
+    }
 }
