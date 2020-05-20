@@ -14,41 +14,68 @@ import Blocks.Block_S;
 import Blocks.Block_T;
 import Blocks.Block_Tbig;
 import Blocks.Block_Z;
+import Blocks.IShape;
 
 public class Main {
-	
-	public static void main(String[] args) {
 
-		GameBoard coisa = new GameBoard();
-		coisa.print();
-		
-		System.out.println();
-		new Block_I().printBody();
-		System.out.println();
-		new Block_Q().printBody();
-		System.out.println();
-		new Block_T().printBody();
-		System.out.println();
-		new Block_L().printBody();
-		System.out.println();
-		new Block_J().printBody();
-		System.out.println();
-		new Block_S().printBody();
-		System.out.println();
-		new Block_Z().printBody();
-		System.out.println();
-		new Block_I1().printBody();
-		System.out.println();
-		new Block_I2().printBody();
-		System.out.println();
-		new Block_I3().printBody();
-		System.out.println();
-		new Block_Lmin().printBody();
-		System.out.println();
-		new Block_Lmax().printBody();
-		System.out.println();
-		new Block_Tbig().printBody();
-		System.out.println();
-		new Block_Qbig().printBody();	
-	}
+    public static void main(String[] args) {
+
+        GameBoard coisa = new GameBoard();
+
+//                coisa.fillElement("A3");
+//                coisa.fillElement("D3");
+//                coisa.fillElement("B5");
+        //coisa.print();
+        IShape shapeJ = new Block_Tbig();
+
+        
+        
+        shapeJ.printBody();
+        System.out.println(shapeJ.getAnchorRow());
+        System.out.println();
+        
+        shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
+        shapeJ.printBody();
+        System.out.println(shapeJ.getAnchorRow());
+        System.out.println();
+        
+        shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
+        shapeJ.printBody();
+        System.out.println(shapeJ.getAnchorRow());
+        System.out.println();
+        
+        shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
+        shapeJ.printBody();
+        System.out.println(shapeJ.getAnchorRow());
+        System.out.println();
+
+//		System.out.println();
+//		new Block_I().printBody();
+//		System.out.println();
+//		new Block_Q().printBody();
+//		System.out.println();
+//		new Block_T().printBody();
+//		System.out.println();
+//		new Block_L().printBody();
+//		System.out.println();
+//		new Block_J().printBody();
+//		System.out.println();
+//		new Block_S().printBody();
+//		System.out.println();
+//		new Block_Z().printBody();
+//		System.out.println();
+//		new Block_I1().printBody();
+//		System.out.println();
+//		new Block_I2().printBody();
+//		System.out.println();
+//		new Block_I3().printBody();
+//		System.out.println();
+//		new Block_Lmin().printBody();
+//		System.out.println();
+//		new Block_Lmax().printBody();
+//		System.out.println();
+//		new Block_Tbig().printBody();
+//		System.out.println();
+//		new Block_Qbig().printBody();
+    }
 }

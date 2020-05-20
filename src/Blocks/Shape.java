@@ -1,51 +1,81 @@
 package Blocks;
 
-abstract class Shape implements IShape{
+import Logic.Utils;
 
-	private Object[][] shape;
+abstract class Shape implements IShape {
 
-	public Shape(int rows, int columns) {
-		shape = new Object[rows][columns];
-	}
+    private Object[][] shape;
 
-	public Object[][] getShape() {
-		return shape;
-	}
-	
-	// pode vir a sair ou mudar
+    public Shape(int rows, int columns) {
+        this.shape = new Object[rows][columns];
 
-	public void printBody() {
+    }
 
-		for (int i = 0; i < shape.length; i++) {
-			printRow(i);
-			System.out.println();
-		}
-	}
+    public Object[][] getShape() {
+        return shape;
+    }
 
-	private void printRow(int rowIndex) {
+    public void rotateMatrixNinetyDegreesAntiClockwise() {//roda 90Âº para a direita
 
-		String str = "";
-		Object[] row = getRow(rowIndex);
+        int n = shape.length;
+        int m = shape[0].length;
+        Object[][] output = new Object[m][n];
 
-		for (int i = 0; i < row.length; i++) {
-			if (row[i] == null || (row[i] == Boolean.FALSE)) {
-				str += ".";
-			} else {
-				str += "#";
-			}
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                output[j][n - 1 - i] = shape[i][j];
+            }
+        }
+        this.shape = output;
+    }
 
-//			para mostar o conteúdo
+    public int getAnchorRow() {
+
+        for (int i = 0; i < shape.length; i++) {
+
+            if (shape[i][0] == null || (shape[i][0] == Boolean.FALSE)) {
+
+            } else {
+                return i;
+            }
+
+        }
+        return 0;
+    }
+
+    // pode vir a sair ou mudar
+    public void printBody() {
+
+        for (int i = 0; i < shape.length; i++) {
+            printRow(i);
+            System.out.println();
+        }
+    }
+
+    private void printRow(int rowIndex) {
+
+        String str = "";
+        Object[] row = getRow(rowIndex);
+
+        for (int i = 0; i < row.length; i++) {
+            if (row[i] == null || (row[i] == Boolean.FALSE)) {
+                str += ".";
+            } else {
+                str += "#";
+            }
+
+//			para mostar o conteï¿½do
 //			str += "|" + row[i];
-		}
+        }
 
-		System.out.print(str);
-	}
+        System.out.print(str);
+    }
 
-	private Object[] getRow(int index) {
-		Object[] row = new Object[shape[0].length];
-		for (int i = 0; i < row.length; i++) {
-			row[i] = shape[index][i];
-		}
-		return row;
-	}
+    private Object[] getRow(int index) {
+        Object[] row = new Object[shape[0].length];
+        for (int i = 0; i < row.length; i++) {
+            row[i] = shape[index][i];
+        }
+        return row;
+    }
 }

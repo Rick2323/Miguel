@@ -4,105 +4,111 @@ import java.util.Arrays;
 
 public class BigSquare {
 
-	private final int SQUARE_SIZE = Utils.getSquareSize();
+    private final int SQUARE_SIZE = Utils.getSquareSize();
 
-	private Object[][] board;
+    private Object[][] board;
 
-	public BigSquare() {
+    public BigSquare() {
 
-		board = new Object[SQUARE_SIZE][SQUARE_SIZE];
+        board = new Object[SQUARE_SIZE][SQUARE_SIZE];
 
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board.length; j++) {
-				// board[i][j] = Utils.getBosta();
-				board[i][j] = false;
-			}
-		}
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                //board[i][j] = Utils.getBosta();
+                board[i][j] = false;
+            }
+        }
 
-	}
+    }
 
-	public boolean rowIsComplete(int index) {
+    public boolean rowIsComplete(int index) {
 
-		Object[] row = getRow(index);
+        Object[] row = getRow(index);
 
-		for (int i = 0; i < board.length; i++) {
-			if (row[i] == null) {
-				return false;
-			}
-		}
+        for (int i = 0; i < board.length; i++) {
+            if (row[i] == null) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public boolean columnIsComplete(int index) {
+    public boolean columnIsComplete(int index) {
 
-		Object[] column = getColumn(index);
+        Object[] column = getColumn(index);
 
-		for (int i = 0; i < board.length; i++) {
-			if (column[i] == null) {
-				return false;
-			}
-		}
+        for (int i = 0; i < board.length; i++) {
+            if (column[i] == null) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public boolean squareIsComplete() {
+    public boolean squareIsComplete() {
 
-		for (int i = 0; i < board.length; i++) {
-			if (!rowIsComplete(i)) {
-				return false;
-			}
-		}
+        for (int i = 0; i < board.length; i++) {
+            if (!rowIsComplete(i)) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	// Private Methods
+    // Private Methods
+    private Object[] getRow(int index) {
+        Object[] row = new Object[board[0].length];
+        for (int i = 0; i < row.length; i++) {
+            row[i] = board[index][i];
+        }
+        return row;
+    }
 
-	private Object[] getRow(int index) {
-		Object[] row = new Object[board[0].length];
-		for (int i = 0; i < row.length; i++) {
-			row[i] = board[index][i];
-		}
-		return row;
-	}
+    private Object[] getColumn(int index) {
+        Object[] column = new Object[board[0].length];
+        for (int j = 0; j < column.length; j++) {
+            column[j] = board[j][index];
+        }
+        return column;
+    }
 
-	private Object[] getColumn(int index) {
-		Object[] column = new Object[board[0].length];
-		for (int j = 0; j < column.length; j++) {
-			column[j] = board[j][index];
-		}
-		return column;
-	}
+    // Prints
+    public void printBody() {
 
-	// Prints
+        for (int i = 0; i < board.length; i++) {
+            printRow(i);
+            System.out.println();
+        }
+    }
 
-	public void printBody() {
+    public void printRow(int rowIndex) {
 
-		for (int i = 0; i < board.length; i++) {
-			printRow(i);
-			System.out.println();
-		}
-	}
+        String str = "";
+        Object[] row = getRow(rowIndex);
 
-	public void printRow(int rowIndex) {
+        for (int i = 0; i < row.length; i++) {
+            if (row[i] == null || (row[i] == Boolean.FALSE)) {
+                str += "|.";
+            } else {
+                str += "|#";
+            }
 
-		String str = "";
-		Object[] row = getRow(rowIndex);
+            // para mostar o conteï¿½do
+            //str += "|" + row[i];
+        }
 
-		for (int i = 0; i < row.length; i++) {
-			if (row[i] == null || (row[i] == Boolean.FALSE)) {
-				str += "|.";
-			} else {
-				str += "|#";
-			}
+        System.out.print(str);
+    }
 
-			// para mostar o conteúdo
-			// str += "|" + row[i];
-		}
+    public void fillElement(int matrixPositionRow, int matrixPositionColumn) {
 
-		System.out.print(str);
-	}
+        int row = matrixPositionRow % 3;
+        int column = matrixPositionColumn % 3;
+
+        board[row][column] = true;
+    }
 
 }
