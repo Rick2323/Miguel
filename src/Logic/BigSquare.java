@@ -26,7 +26,8 @@ public class BigSquare {
         Object[] row = getRow(index);
 
         for (int i = 0; i < board.length; i++) {
-            if (row[i] == null) {
+
+            if (row[i] == null || (row[i] == Boolean.FALSE)) {
                 return false;
             }
         }
@@ -39,7 +40,8 @@ public class BigSquare {
         Object[] column = getColumn(index);
 
         for (int i = 0; i < board.length; i++) {
-            if (column[i] == null) {
+
+            if (column[i] == null || (column[i] == Boolean.FALSE)) {
                 return false;
             }
         }
@@ -109,6 +111,40 @@ public class BigSquare {
         int column = matrixPositionColumn % 3;
 
         board[row][column] = true;
+    }
+
+    public void testElement(int matrixPositionRow, int matrixPositionColumn) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
+
+        int row = matrixPositionRow % 3;
+        int column = matrixPositionColumn % 3;
+
+        //if(board[row][column].equals(new Boolean(true))){
+        if (!(board[row][column] == null || (board[row][column] == Boolean.FALSE))) {
+
+            throw new ElementAlreadyFilledException("Bosta preenchida");
+        }
+
+    }
+    
+    public void clearRow(int rowIndex){
+        
+       for (int i = 0; i < board.length; i++) {
+            board[rowIndex][i] = false;
+        }
+    }
+    public void clearColumn(int columnIndex){
+        
+       for (int i = 0; i < board.length; i++) {
+            board[i][columnIndex] = false;
+        }
+    }
+
+    public void clear() {
+        for (int i = 0; i < board.length; i++){
+            for (int j = 0; j < board.length; j++){
+                board[i][j] = false;
+            }
+        }
     }
 
 }

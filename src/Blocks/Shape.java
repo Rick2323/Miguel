@@ -15,7 +15,7 @@ abstract class Shape implements IShape {
         return shape;
     }
 
-    public void rotateMatrixNinetyDegreesAntiClockwise() {//roda 90º para a direita
+    public void rotateMatrixNinetyDegreesClockwise() {//roda 90º para a direita
 
         int n = shape.length;
         int m = shape[0].length;

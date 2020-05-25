@@ -15,6 +15,7 @@ import Blocks.Block_T;
 import Blocks.Block_Tbig;
 import Blocks.Block_Z;
 import Blocks.IShape;
+import java.util.List;
 
 public class Main {
 
@@ -26,17 +27,23 @@ public class Main {
 //                coisa.fillElement("D3");
 //                coisa.fillElement("B5");
         //coisa.print();
-        IShape shapeJ = new Block_Tbig();
+        IShape shapeJ = new Block_Q();
 
-        shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
-        shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
-        shapeJ.rotateMatrixNinetyDegreesAntiClockwise();
-        
-        coisa.placeBlock(shapeJ, "D5");
-        coisa.print();
-        
-        
+//        shapeJ.rotateMatrixNinetyDegreesClockwise();
+//        shapeJ.rotateMatrixNinetyDegreesClockwise();
+//        shapeJ.rotateMatrixNinetyDegreesClockwise();
+//        coisa.placeBlock(shapeJ, "A1");
+//
+//        coisa.placeBlock(shapeJ, "C1");
+//        coisa.placeBlock(shapeJ, "A3");
+//        coisa.placeBlock(shapeJ, "C3");
+//        coisa.print();
+//        coisa.clearFilledBigSquares();
+//        coisa.print();
 
+        List<BlockType> supportedShapes = GameMode.getSupportedShapes(GameMode.BASIC);
+        supportedShapes.forEach((n) -> BlockType.createBlock(n).printBody());
+        
 //		System.out.println();
 //		new Block_I().printBody();
 //		System.out.println();

@@ -1,6 +1,7 @@
 package Logic;
 
 import Blocks.IShape;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameBoard {
@@ -78,12 +79,21 @@ public class GameBoard {
         }
     }
 
-    private  void fillElement(int matrixPositionRow, int matrixPositionColumn) {
+    private void fillElement(int matrixPositionRow, int matrixPositionColumn) {
 
         int row = matrixPositionRow / 3;
         int column = matrixPositionColumn / 3;
 
         board[row][column].fillElement(matrixPositionRow, matrixPositionColumn);
+
+    }
+
+    private void testElement(int matrixPositionRow, int matrixPositionColumn) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
+
+        int row = matrixPositionRow / 3;
+        int column = matrixPositionColumn / 3;
+
+        board[row][column].testElement(matrixPositionRow, matrixPositionColumn);
 
     }
 
@@ -106,16 +116,128 @@ public class GameBoard {
 
         int anchorRow = shape.getAnchorRow();
 
+        ArrayList<int[]> placedBlocks = new ArrayList<>();
+
         int matrixPositionRow = getRowFromMatrixPosition(matrixPosition);
         int matrixPositionColumn = getColumnFromMatrixPosition(matrixPosition);
+
+        if (testBlock(shapeMatrix, matrixPositionRow, matrixPositionColumn, anchorRow)) {
+            for (int i = 0; i < shapeMatrix.length; i++) {
+                for (int j = 0; j < shapeMatrix[0].length; j++) {
+                    if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE)) {
+
+                    } else {
+                        fillElement((matrixPositionRow - anchorRow + i), (matrixPositionColumn + j));
+
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean testBlock(Object[][] shapeMatrix, int matrixPositionRow, int matrixPositionColumn, int anchorRow) {
+
+        try {
+            for (int i = 0; i < shapeMatrix.length; i++) {
+                for (int j = 0; j < shapeMatrix[0].length; j++) {
+                    if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE)) {
+
+                    } else {
+                        testElement((matrixPositionRow - anchorRow + i), (matrixPositionColumn + j));
+
+                    }
+                }
+            }
+            return true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Não cabe dentro da matriz");
+            return false;
+        } catch (ElementAlreadyFilledException e) {
+            System.out.println(e.getMessage());
+
+            return false;
+        }
+    }
+
+    public void clearFilledRows() {
+
+        BigSquare square;
+        int increment = 0;
+
+        for (int rowIndex = 0; rowIndex < board.length; rowIndex++) {
+            for (int k = 0; k < board.length; k++) {
+                boolean rowFilled = true;
+                for (int columnIndex = 0; columnIndex < board.length; columnIndex++) {
+                    square = board[rowIndex][columnIndex];
+                    if (!square.rowIsComplete(k)) {
+                        rowFilled = false;
+                    }
+
+                }
+                if (rowFilled) {
+                    clearRow(rowIndex, k);
+                }
+
+            }
+            increment += 3;
+
+        }
+
+    }
+
+    private void clearRow(int rowIndex, int k) {
+
+        BigSquare square;
+        for (int columnIndex = 0; columnIndex < board.length; columnIndex++) {
+            square = board[rowIndex][columnIndex];
+            square.clearRow(k);
+        }
+    }
+
+    public void clearFilledColumns() {
+
+        BigSquare square;
+        int increment = 0;
+        for (int columnIndex = 0; columnIndex < board.length; columnIndex++) {
+            for (int k = 0; k < board.length; k++) {
+                boolean columnFilled = true;
+                for (int rowIndex = 0; rowIndex < board.length; rowIndex++) {
+                    square = board[rowIndex][columnIndex];
+                    if (!square.columnIsComplete(k)) {
+                        columnFilled = false;
+                    }
+
+                }
+                if (columnFilled) {
+                    clearColumn(columnIndex, k);
+                }
+
+            }
+            increment += 3;
+
+        }
+
+    }
+
+    private void clearColumn(int columnIndex, int k) {
         
-        for (int i = 0; i < shapeMatrix.length; i++) {
-            for (int j = 0; j < shapeMatrix[0].length; j++) {
-              if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE)){
-                  
-              }else{
-                  fillElement((matrixPositionRow - anchorRow + i), (matrixPositionColumn + j));
-              }
+        BigSquare square;
+        for (int rowIndex = 0; rowIndex < board.length; rowIndex++) {
+            square = board[rowIndex][columnIndex];
+            square.clearColumn(k);
+        }
+    }
+    
+    public void clearFilledBigSquares(){
+            
+        BigSquare square;
+        
+        for(int rowIndex = 0; rowIndex < board.length; rowIndex++){
+            for(int columnIndex = 0; columnIndex < board.length; columnIndex++){
+                square = board[rowIndex][columnIndex];
+                if(square.squareIsComplete()){
+                    square.clear();
+                }
             }
         }
     }
