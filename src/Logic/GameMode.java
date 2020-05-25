@@ -15,10 +15,10 @@ import java.util.List;
 public enum GameMode {
     BASIC, ADVANCED;
 
-    public static List<BlockType> getSupportedShapes(GameMode mode) {
+    public List<BlockType> getSupportedShapes() {
 
         ArrayList<BlockType> basicBlocks = new ArrayList<>();
-        switch (mode) {
+        switch (this) {
             case BASIC:
 
                 basicBlocks.add(BlockType.BLOCK_I);

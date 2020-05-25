@@ -41,8 +41,8 @@ public class Main {
 //        coisa.clearFilledBigSquares();
 //        coisa.print();
 
-        List<BlockType> supportedShapes = GameMode.getSupportedShapes(GameMode.BASIC);
-        supportedShapes.forEach((n) -> BlockType.createBlock(n).printBody());
+        List<BlockType> supportedShapes = GameMode.ADVANCED.getSupportedShapes();
+        supportedShapes.forEach((n) -> n.createBlock().printBody());
         
 //		System.out.println();
 //		new Block_I().printBody();

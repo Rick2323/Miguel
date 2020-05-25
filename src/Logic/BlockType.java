@@ -17,9 +17,9 @@ public enum BlockType {
     BLOCK_LMAX, BLOCK_TBIG, BLOCK_QBIG;
     
     
-    public static IShape createBlock(BlockType type){
+    public IShape createBlock(){
         
-        switch(type){
+        switch(this){
             case BLOCK_I:
                 return new Block_I();
             case BLOCK_Q:
