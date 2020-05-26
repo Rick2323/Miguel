@@ -6,6 +6,6 @@ public interface IShape {
         public void printBody();
         public void rotateMatrixNinetyDegreesClockwise();
         public int getAnchorRow();
-        
+        public int getElementCount();
         
 }

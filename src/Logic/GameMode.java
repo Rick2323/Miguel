@@ -5,6 +5,7 @@
  */
 package Logic;
 
+import Blocks.IShape;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,34 +18,69 @@ public enum GameMode {
 
     public List<BlockType> getSupportedShapes() {
 
-        ArrayList<BlockType> basicBlocks = new ArrayList<>();
+        ArrayList<BlockType> blocks = new ArrayList<>();
         switch (this) {
             case BASIC:
 
-                basicBlocks.add(BlockType.BLOCK_I);
-                basicBlocks.add(BlockType.BLOCK_Q);
-                basicBlocks.add(BlockType.BLOCK_T);
-                basicBlocks.add(BlockType.BLOCK_L);
-                basicBlocks.add(BlockType.BLOCK_J);
-                basicBlocks.add(BlockType.BLOCK_S);
-                basicBlocks.add(BlockType.BLOCK_Z);
+                blocks.add(BlockType.BLOCK_I);
+                blocks.add(BlockType.BLOCK_Q);
+                blocks.add(BlockType.BLOCK_T);
+                blocks.add(BlockType.BLOCK_L);
+                blocks.add(BlockType.BLOCK_J);
+                blocks.add(BlockType.BLOCK_S);
+                blocks.add(BlockType.BLOCK_Z);
 
-                return basicBlocks;
-                
+                return blocks;
+
             case ADVANCED:
-                
-                basicBlocks.add(BlockType.BLOCK_I1);
-                basicBlocks.add(BlockType.BLOCK_I2);
-                basicBlocks.add(BlockType.BLOCK_I3);
-                basicBlocks.add(BlockType.BLOCK_LMIN);
-                basicBlocks.add(BlockType.BLOCK_LMAX);
-                basicBlocks.add(BlockType.BLOCK_TBIG);
-                basicBlocks.add(BlockType.BLOCK_QBIG);
-                
-                return basicBlocks;
-                
+
+                blocks.add(BlockType.BLOCK_I1);
+                blocks.add(BlockType.BLOCK_I2);
+                blocks.add(BlockType.BLOCK_I3);
+                blocks.add(BlockType.BLOCK_LMIN);
+                blocks.add(BlockType.BLOCK_LMAX);
+                blocks.add(BlockType.BLOCK_TBIG);
+                blocks.add(BlockType.BLOCK_QBIG);
+
+                return blocks;
+
             default:
                 return null;
         }
+    }
+
+    public static GameMode getGameModeOfShape(IShape shape) {
+
+        List<BlockType> supportedShapes = GameMode.BASIC.getSupportedShapes();
+        Class<? extends IShape> shapeClass = shape.getClass();
+        Class<? extends IShape> testClass;
+
+        for (BlockType supportedShape : supportedShapes) {
+
+            IShape testBlock = supportedShape.createBlock();
+
+            testClass = testBlock.getClass();
+
+            if (shapeClass.equals(testClass)) {
+
+                return BASIC;
+            }
+        }
+        
+        supportedShapes = GameMode.ADVANCED.getSupportedShapes();
+
+        for (BlockType supportedShape : supportedShapes) {
+
+            IShape testBlock = supportedShape.createBlock();
+
+            testClass = testBlock.getClass();
+
+            if (shapeClass.equals(testClass)) {
+
+                return ADVANCED;
+            }
+
+        }
+        return null;
     }
 }

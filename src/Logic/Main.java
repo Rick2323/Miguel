@@ -27,8 +27,12 @@ public class Main {
 //                coisa.fillElement("D3");
 //                coisa.fillElement("B5");
         //coisa.print();
-        IShape shapeJ = new Block_Q();
-
+        
+        
+        
+        IShape shapeT = new Block_Q();
+        System.out.println(GameScore.getPointsByElement(shapeT));
+        
 //        shapeJ.rotateMatrixNinetyDegreesClockwise();
 //        shapeJ.rotateMatrixNinetyDegreesClockwise();
 //        shapeJ.rotateMatrixNinetyDegreesClockwise();
@@ -40,10 +44,8 @@ public class Main {
 //        coisa.print();
 //        coisa.clearFilledBigSquares();
 //        coisa.print();
-
-        List<BlockType> supportedShapes = GameMode.ADVANCED.getSupportedShapes();
-        supportedShapes.forEach((n) -> n.createBlock().printBody());
-        
+//        List<BlockType> supportedShapes = GameMode.ADVANCED.getSupportedShapes();
+//        supportedShapes.forEach((n) -> n.createBlock().printBody());
 //		System.out.println();
 //		new Block_I().printBody();
 //		System.out.println();

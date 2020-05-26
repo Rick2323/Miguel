@@ -78,4 +78,28 @@ abstract class Shape implements IShape {
         }
         return row;
     }
+
+    public int getElementCount() {
+
+        int count = 0;
+        for (int i = 0; i < shape.length; i++) {
+            
+            count += getElementCountByRow(getRow(i));
+
+        }
+        return count;
+    }
+
+    private int getElementCountByRow(Object[] row) {
+
+        int count = 0;
+
+        for (int i = 0; i < row.length; i++) {
+            if (!(row[i] == null || (row[i] == Boolean.FALSE))) {
+                count++;
+            }
+
+        }
+        return count;
+    }
 }
