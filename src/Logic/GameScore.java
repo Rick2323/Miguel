@@ -50,7 +50,7 @@ public class GameScore {
 
         int count = cleanedElements * POINTS_FOR_CLEARED_ELEMENT;
 
-        if (squareCleared) {
+        if (squareCleared && cleanedElements > 0) {
             count += BONUS_FOR_CLEARED_SQUARE;
         }
         return count;
