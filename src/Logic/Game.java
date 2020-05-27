@@ -40,14 +40,9 @@ public class Game {
 
     public IShape getPlayableBlock(int index) {
 
-        if (index >= 0 && index < playableBlocks.size()) {
+        populatePlayableBlocks();
 
-            populatePlayableBlocks();
-
-            return playableBlocks.remove(index);
-        }
-
-        return null;
+        return playableBlocks.remove(index);
     }
 
     private void populatePlayableBlocks() {
@@ -72,8 +67,16 @@ public class Game {
         IShape block = getPlayableBlock(playableBlockIndex);
 
         board.placeBlock(block, matrixPosition);
+
+        score.increaseScore(GameScore.getPointsForPlacedElement(block));
     }
 
+//    public void playBlock(IShape shape, String matrixPosition) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
+//
+//        board.placeBlock(shape, matrixPosition);
+//
+//        score.increaseScore(GameScore.getPointsForPlacedElement(shape));
+//    }
     public boolean hasTheGameFinished() {
 
         ArrayList<IShape> playableBlocks1 = getPlayableBlocks();
@@ -104,4 +107,32 @@ public class Game {
             System.out.println();
         }
     }
+
+    public int getScore() {
+
+        return score.getScore();
+    }
+
+    public void clearFilledRows() {
+
+        int clearedElements = board.clearFilledRows();
+
+        score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, false));
+    }
+
+    public void clearFilledColumns() {
+
+        int clearedElements = board.clearFilledColumns();
+
+        score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, false));
+
+    }
+
+    public void clearFilledSquares() {
+
+        int clearedElements = board.clearFilledBigSquares();
+
+        score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, true));
+    }
+
 }

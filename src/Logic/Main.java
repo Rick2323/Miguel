@@ -1,5 +1,8 @@
 package Logic;
 
+import Blocks.*;
+
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,15 +12,18 @@ public class Main {
 
         Game game = new Game(GameMode.ADVANCED);
 
+        IShape shape = new Block_Qbig();
+        
         game.printGameBoard();
 
-        game.printPlayableBlocks();
+        //game.printPlayableBlocks();
 
      
         
         try {
             game.playBlock(0, "C4");
-            game.playBlock(0, "F7");
+            //game.playBlock(shape, "D1");
+            //game.playBlock(shape, "G1");
         } catch (ArrayIndexOutOfBoundsException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ElementAlreadyFilledException ex) {
@@ -25,6 +31,16 @@ public class Main {
         }
         
         game.printGameBoard();
+        
+        System.out.println("Score -> " + game.getScore());
+        
+        
+        game.clearFilledSquares();
+        
+        game.printGameBoard();
+        
+        System.out.println("Score -> " + game.getScore());
+        
         
         
     }

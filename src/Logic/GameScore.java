@@ -17,7 +17,7 @@ public class GameScore {
     private static final int POINTS_FOR_PLACED_ELEMENT_IN_ADVANCED_MODE = 2;
     private static final int POINTS_FOR_CLEARED_ELEMENT = 4;
     private static final int BONUS_FOR_CLEARED_SQUARE = 10;
-    
+
     private int score;
 
     public GameScore() {
@@ -32,7 +32,6 @@ public class GameScore {
         this.score += score;
     }
 
-    
     public static int getPointsForPlacedElement(IShape shape) {
 
         GameMode gameModeOfShape = GameMode.getGameModeOfShape(shape);
