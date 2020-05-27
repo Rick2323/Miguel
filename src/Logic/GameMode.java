@@ -34,6 +34,13 @@ public enum GameMode {
 
             case ADVANCED:
 
+                blocks.add(BlockType.BLOCK_I);
+                blocks.add(BlockType.BLOCK_Q);
+                blocks.add(BlockType.BLOCK_T);
+                blocks.add(BlockType.BLOCK_L);
+                blocks.add(BlockType.BLOCK_J);
+                blocks.add(BlockType.BLOCK_S);
+                blocks.add(BlockType.BLOCK_Z);
                 blocks.add(BlockType.BLOCK_I1);
                 blocks.add(BlockType.BLOCK_I2);
                 blocks.add(BlockType.BLOCK_I3);

@@ -1,7 +1,5 @@
 package Logic;
 
-import java.util.Arrays;
-
 public class BigSquare {
 
     private final int SQUARE_SIZE = Utils.getSquareSize();
@@ -126,25 +124,28 @@ public class BigSquare {
 
     }
     
-    public void clearRow(int rowIndex){
+    public int clearRow(int rowIndex){
         
        for (int i = 0; i < board.length; i++) {
             board[rowIndex][i] = false;
         }
+       return board.length;
     }
-    public void clearColumn(int columnIndex){
+    public int clearColumn(int columnIndex){
         
        for (int i = 0; i < board.length; i++) {
             board[i][columnIndex] = false;
         }
+       return board.length;
     }
 
-    public void clear() {
+    public int clearSquare() {
         for (int i = 0; i < board.length; i++){
             for (int j = 0; j < board.length; j++){
                 board[i][j] = false;
             }
         }
+        return board.length * board.length;
     }
 
 }
