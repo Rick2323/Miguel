@@ -5,6 +5,7 @@
  */
 package Logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,7 +14,7 @@ import java.util.TreeMap;
  *
  * @author Miglob
  */
-public class Ranking {
+public class Ranking implements Serializable {
     
     private ArrayList<Player> players;
     
