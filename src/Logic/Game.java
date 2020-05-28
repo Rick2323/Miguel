@@ -6,6 +6,8 @@
 package Logic;
 
 import Blocks.IShape;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +18,7 @@ import java.util.Random;
  *
  * @author Miglob
  */
-public class Game {
+public class Game implements Serializable{
 
     private LocalDate date;
     private GameBoard board;
