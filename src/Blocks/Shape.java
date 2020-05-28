@@ -1,7 +1,5 @@
 package Blocks;
 
-
-
 abstract class Shape implements IShape {
 
     private Object[][] shape;
@@ -15,7 +13,7 @@ abstract class Shape implements IShape {
         return shape;
     }
 
-    public void rotateMatrixNinetyDegreesClockwise() {//roda 90º para a direita
+    private void rotate() {//roda 90º para a direita
 
         int n = shape.length;
         int m = shape[0].length;
@@ -27,6 +25,18 @@ abstract class Shape implements IShape {
             }
         }
         this.shape = output;
+    }
+
+    public void rotateMatrixNinetyDegreesClockwise(int numberOfRotations) {
+
+        if (numberOfRotations > 0) {
+
+            int rotation = numberOfRotations % 4;
+
+            for (int i = 0; i < rotation; i++) {
+                rotate();
+            }
+        }
     }
 
     public int getAnchorRow() {
@@ -83,7 +93,7 @@ abstract class Shape implements IShape {
 
         int count = 0;
         for (int i = 0; i < shape.length; i++) {
-            
+
             count += getElementCountByRow(getRow(i));
 
         }

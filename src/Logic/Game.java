@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -45,7 +46,7 @@ public class Game {
         return playableBlocks.remove(index);
     }
 
-    private void populatePlayableBlocks() {
+    private void populatePlayableBlocks() {//insere numa lista os blocos que pode jogar
 
         int numberOfShapes = 3;
 
@@ -57,7 +58,9 @@ public class Game {
 
             for (BlockType supportedShape : supportedShapes) {
 
-                playableBlocks.add(supportedShape.createBlock());
+                IShape createBlock = supportedShape.createBlock();
+                createBlock.rotateMatrixNinetyDegreesClockwise(new Random().nextInt(4));               
+                playableBlocks.add(createBlock);
             }
         }
     }
@@ -92,6 +95,7 @@ public class Game {
         return hasFinished;
     }
 
+    
     public void printGameBoard() {
 
         board.print();

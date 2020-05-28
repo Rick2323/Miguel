@@ -6,6 +6,8 @@
 package Logic;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -19,5 +21,18 @@ public class Ranking {
         players = new ArrayList<>();
     }
     
+    public Map<Player, Integer> getTop10(){
+        Map<Player, Integer> top10 = new TreeMap<>();
+        
+        this.players.forEach((player) -> top10.put(player, player.getHighScore()));
+            
+        return top10;
+    } 
     
+    public void addPlayer(Player player){
+        
+        if(player != null){
+            players.add(player);
+        }
+    }
 }
