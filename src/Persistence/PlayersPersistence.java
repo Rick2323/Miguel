@@ -20,7 +20,7 @@ public class PlayersPersistence {
 
 	private List<Player> players;
 
-	public PlayersPersistence() {
+	private PlayersPersistence() {
 		this.players = new ArrayList<>();
 	}
 
@@ -38,7 +38,7 @@ public class PlayersPersistence {
 
 	public void addPlayer(Player player) {
 		if (player != null) {
-			boolean exists = this.players.stream().map(p -> p.getName()).anyMatch(p -> p.equals(player));
+			boolean exists = this.players.stream().anyMatch(p -> p.equals(player));
 			
 			if (!exists) {
 				this.players.add(player);
