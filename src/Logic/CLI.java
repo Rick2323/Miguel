@@ -5,7 +5,11 @@
  */
 package Logic;
 
+import Persistence.RankingPersistence;
 import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -51,16 +55,33 @@ public class CLI {
         System.out.println("0 - Voltar");
     }
 
-    private void run() {
+    public void run() {
+
+        RankingPersistence rankingPersistence = RankingPersistence.getInstance();
+
+        rankingPersistence.loadRanking();
+
+        if (rankingPersistence.getRanking() != null) {
+            this.ranking = rankingPersistence.getRanking();
+        }else{
+            this.ranking = new Ranking();
+            rankingPersistence.setRanking(ranking);
+        }
 
         this.running = true;
         InputReader inputReader = new InputReader();
 
         printWelcomeScreen();
-        //forçar o load do player e colocar validação
+        
         String name = inputReader.getText("");
 
-        this.player = new Player(name);
+        Player p = this.ranking.getPlayer(name);
+        if (p != null) {
+            this.player = p;
+        } else {
+            this.player = new Player(name);
+            this.ranking.addPlayer(this.player);
+        }
 
         while (this.running) {
             printMainScreen();
@@ -89,11 +110,36 @@ public class CLI {
     }
 
     private void newGame() {
-        
+
+        printNewGameScreen();
+
+        InputReader inputReader = new InputReader();
+        int option = inputReader.getInteger("");
+
+        switch (option) {
+            case 1:
+                newGame(GameMode.BASIC);
+                break;
+            case 2:
+                newGame(GameMode.ADVANCED);
+                break;
+            case 0:
+                break;
+            default:
+                printInvalidInput();
+        }
     }
 
     private void openGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+       
+        Game game = this.player.getRecentSavedGame(); 
+        if(game != null){
+            playGame(game);
+        }else{
+            System.out.println("Não existem jogos gravados!");
+        }
+       
     }
 
     private void showPersonalScores() {
@@ -114,19 +160,22 @@ public class CLI {
         System.out.println("TOP 10:");
         System.out.println();
 
-        Player[] players = (Player[]) top10.keySet().toArray();
-        for (int i = 0; i < players.length; i++) {
+        Set<Player> players = top10.keySet();
+        
+        int rank = 1;
+        for (Player player : players) {
 
-            Player player = players[i];
+            
             int score = top10.get(player);
 
-            System.out.println("" + (i + 1) + " - " + player.getName() + " - " + score);
+            System.out.println("" + rank + " - " + player.getName() + " - " + score);
+            rank++;
         }
     }
 
     private void exit() {
 
-        printGoodByScreen();
+        printGoodByeScreen();
         this.running = false;
     }
 
@@ -135,8 +184,87 @@ public class CLI {
         System.out.println("Input inválido!");
     }
 
-    private void printGoodByScreen() {
+    private void printGoodByeScreen() {
 
         System.out.println("Obrigado por ter jogado BlockuDoku!!!!");
+    }
+
+    private void newGame(GameMode gameMode) {
+
+        Game game = new Game(gameMode);
+        this.player.addGame(game);
+
+        playGame(game);
+    }
+
+    private void playGame(Game game) {
+
+        boolean gameRunning = !game.hasTheGameFinished();
+
+        RankingPersistence rankingPersistence = RankingPersistence.getInstance();
+
+        while (gameRunning) {
+
+            printGameState(game);
+
+            InputReader inputReader = new InputReader();
+
+            String option = inputReader.getText("Indique a próxima jogada (Bloco-ColunaLinha): ");
+
+            String[] split;
+
+            switch (option) {
+                case "CANCEL":
+                    gameRunning = false;
+                    break;
+                case "SAVE":
+                    rankingPersistence.saveRanking();
+                    gameRunning = false;
+                    break;
+                default:
+
+                    if (option.matches("([A-Z]-[A-Z][1-9]{1,2})")) {
+
+                        try {
+                            split = split(option);
+
+                            game.playBlock(split[0], split[1]);
+
+                            gameRunning = !game.hasTheGameFinished();
+
+                        } catch (ArrayIndexOutOfBoundsException ex) {
+                            System.out.println("A peça não cabe no tabuleiro!");
+                        } catch (ElementAlreadyFilledException ex) {
+                            System.out.println("A casa já está preenchida!");
+                        }catch(IndexOutOfBoundsException ex){
+                           printInvalidInput();
+                        }
+                    } else {
+                        printInvalidInput();
+                    }
+            }
+
+        }
+        System.out.println("Fim do Jogo!!!");
+        System.out.println("Resultado: " + game.getScore());
+
+        rankingPersistence.saveRanking();
+
+    }
+
+    private void printGameState(Game game) {
+
+        if (game != null) {
+            game.printGameBoard();
+            game.printPlayableBlocks();
+        }
+    }
+
+    private String[] split(String option) {
+
+        String[] parts = option.split("-");
+
+        return parts;
+
     }
 }

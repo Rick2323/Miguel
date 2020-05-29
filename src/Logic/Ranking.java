@@ -15,25 +15,51 @@ import java.util.TreeMap;
  * @author Miglob
  */
 public class Ranking implements Serializable {
-    
+
     private ArrayList<Player> players;
-    
-    public Ranking(){
+
+    public Ranking() {
         players = new ArrayList<>();
     }
-    
-    public Map<Player, Integer> getTop10(){
+
+    public Map<Player, Integer> getTop10() {
+        Map<Player, Integer> aux = new TreeMap<>();
+
+        this.players.forEach((player) -> aux.put(player, player.getHighScore()));
+        
         Map<Player, Integer> top10 = new TreeMap<>();
         
-        this.players.forEach((player) -> top10.put(player, player.getHighScore()));
-            
-        return top10;
-    } 
-    
-    public void addPlayer(Player player){
+        int limit = 10;
         
-        if(player != null){
+        for(Player player : aux.keySet()){
+            if(limit > 0){
+                top10.put(player, aux.get(player));
+                limit--;
+            }
+        }
+
+        return top10;
+    }
+
+    public void addPlayer(Player player) {
+
+        if (player != null) {
             players.add(player);
         }
     }
+
+    public Player getPlayer(String name) {
+        try {
+            Player player = this.players
+                    .stream()
+                    .filter(p -> p.getName().equals(name))
+                    .findFirst()
+                    .get();
+            
+            return player;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

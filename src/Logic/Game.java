@@ -8,7 +8,7 @@ package Logic;
 import Blocks.IShape;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,16 +18,16 @@ import java.util.Random;
  *
  * @author Miglob
  */
-public class Game implements Serializable{
+public class Game implements Serializable {
 
-    private LocalDate date;
+    private LocalDateTime date;
     private GameBoard board;
     private GameScore score;
     private ArrayList<IShape> playableBlocks;
     private GameMode mode;
 
     public Game(GameMode mode) {
-        date = LocalDate.now();
+        date = LocalDateTime.now();
         board = new GameBoard();
         score = new GameScore();
         playableBlocks = new ArrayList<>();
@@ -41,13 +41,18 @@ public class Game implements Serializable{
         return playableBlocks;
     }
 
-    public IShape getPlayableBlock(int index) {
-
+    private IShape getPlayableBlock(int index) {
+        
+        
         populatePlayableBlocks();
 
-        return playableBlocks.remove(index);
+        return playableBlocks.get(index);
     }
 
+    private void removePlayableBlock(int index){
+        playableBlocks.remove(index);
+    }
+    
     private void populatePlayableBlocks() {//insere numa lista os blocos que pode jogar
 
         int numberOfShapes = 3;
@@ -61,27 +66,32 @@ public class Game implements Serializable{
             for (BlockType supportedShape : supportedShapes) {
 
                 IShape createBlock = supportedShape.createBlock();
-                createBlock.rotateMatrixNinetyDegreesClockwise(new Random().nextInt(4));               
+                createBlock.rotateMatrixNinetyDegreesClockwise(new Random().nextInt(4));
                 playableBlocks.add(createBlock);
             }
         }
     }
 
-    public void playBlock(int playableBlockIndex, String matrixPosition) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
+    public void playBlock(String playableBlock, String matrixPosition) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
 
-        IShape block = getPlayableBlock(playableBlockIndex);
+        IShape block = getPlayableBlock(getPlayableBlockIndex(playableBlock));
 
         board.placeBlock(block, matrixPosition);
+        
+        removePlayableBlock(getPlayableBlockIndex(playableBlock));
 
         score.increaseScore(GameScore.getPointsForPlacedElement(block));
+        
+        clearFilled();
     }
 
-//    public void playBlock(IShape shape, String matrixPosition) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
-//
-//        board.placeBlock(shape, matrixPosition);
-//
-//        score.increaseScore(GameScore.getPointsForPlacedElement(shape));
-//    }
+    private int getPlayableBlockIndex(String playableBlock) {
+
+        char a = 'A';
+
+        return playableBlock.charAt(0) - a;
+    }
+
     public boolean hasTheGameFinished() {
 
         ArrayList<IShape> playableBlocks1 = getPlayableBlocks();
@@ -97,7 +107,6 @@ public class Game implements Serializable{
         return hasFinished;
     }
 
-    
     public void printGameBoard() {
 
         board.print();
@@ -107,26 +116,39 @@ public class Game implements Serializable{
 
         getPlayableBlocks();
 
-        for (IShape playableBlock : playableBlocks) {
+        char a = 'A';
+
+        System.out.println("Blocos a jogar: ");
+
+        for (int i = 0; i < this.playableBlocks.size(); i++) {
+
+            IShape playableBlock = this.playableBlocks.get(i);
+            char temp = (char) (a + i);
+            System.out.println("Bloco " + temp);
 
             playableBlock.printBody();
             System.out.println();
         }
     }
 
+    public LocalDateTime getDate(){
+        return this.date;
+    }
+    
+    
     public int getScore() {
 
         return score.getScore();
     }
 
-    public void clearFilledRows() {
+    private void clearFilledRows() {
 
         int clearedElements = board.clearFilledRows();
 
         score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, false));
     }
 
-    public void clearFilledColumns() {
+    private void clearFilledColumns() {
 
         int clearedElements = board.clearFilledColumns();
 
@@ -134,11 +156,18 @@ public class Game implements Serializable{
 
     }
 
-    public void clearFilledSquares() {
+    private void clearFilledSquares() {
 
         int clearedElements = board.clearFilledBigSquares();
 
         score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, true));
+    }
+    
+    private void clearFilled(){
+        
+        clearFilledRows();
+        clearFilledColumns();
+        clearFilledSquares();
     }
 
 }

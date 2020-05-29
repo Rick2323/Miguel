@@ -1,6 +1,8 @@
 package Logic;
 
-public class BigSquare {
+import java.io.Serializable;
+
+public class BigSquare implements Serializable{
 
     private final int SQUARE_SIZE = Utils.getSquareSize();
 
@@ -25,7 +27,7 @@ public class BigSquare {
 
         for (int i = 0; i < board.length; i++) {
 
-            if (row[i] == null || (row[i] == Boolean.FALSE)) {
+            if (row[i] == null || (row[i] == Boolean.FALSE)|| row[i].equals(false)) {
                 return false;
             }
         }
@@ -39,7 +41,7 @@ public class BigSquare {
 
         for (int i = 0; i < board.length; i++) {
 
-            if (column[i] == null || (column[i] == Boolean.FALSE)) {
+            if (column[i] == null || (column[i] == Boolean.FALSE) || column[i].equals(false)) {
                 return false;
             }
         }
@@ -90,7 +92,7 @@ public class BigSquare {
         Object[] row = getRow(rowIndex);
 
         for (int i = 0; i < row.length; i++) {
-            if (row[i] == null || (row[i] == Boolean.FALSE)) {
+            if (row[i] == null || (row[i] == Boolean.FALSE) || row[i].equals(false)) {
                 str += "|.";
             } else {
                 str += "|#";
@@ -117,9 +119,9 @@ public class BigSquare {
         int column = matrixPositionColumn % 3;
 
         //if(board[row][column].equals(new Boolean(true))){
-        if (!(board[row][column] == null || (board[row][column] == Boolean.FALSE))) {
+        if (!(board[row][column] == null || (board[row][column] == Boolean.FALSE) || board[row][column].equals(false))) {
 
-            throw new ElementAlreadyFilledException("Bosta preenchida");
+            throw new ElementAlreadyFilledException("Casa preenchida");
         }
 
     }

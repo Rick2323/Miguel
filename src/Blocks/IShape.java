@@ -1,6 +1,8 @@
 package Blocks;
 
-public interface IShape {
+import java.io.Serializable;
+
+public interface IShape extends Serializable{
 
 	public Object[][] getShape();
         public void printBody();

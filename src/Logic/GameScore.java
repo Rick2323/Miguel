@@ -6,12 +6,13 @@
 package Logic;
 
 import Blocks.IShape;
+import java.io.Serializable;
 
 /**
  *
  * @author Miglob
  */
-public class GameScore {
+public class GameScore implements Serializable{
 
     private static final int POINTS_FOR_PLACED_ELEMENT_IN_BASIC_MODE = 1;
     private static final int POINTS_FOR_PLACED_ELEMENT_IN_ADVANCED_MODE = 2;

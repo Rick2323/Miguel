@@ -1,9 +1,10 @@
 package Logic;
 
 import Blocks.IShape;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameBoard {
+public class GameBoard implements Serializable {
 
     private final int BOARD_SIZE = Utils.getSquareSize();
 
@@ -121,11 +122,11 @@ public class GameBoard {
         int matrixPositionColumn = getColumnFromMatrixPosition(matrixPosition);
 
         testBlock(shapeMatrix, matrixPositionRow, matrixPositionColumn, anchorRow);
-        
+
         for (int i = 0; i < shapeMatrix.length; i++) {
             for (int j = 0; j < shapeMatrix[0].length; j++) {
 
-                if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE)) {
+                if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE) || shapeMatrix[i][j].equals(false)) {
 
                 } else {
                     fillElement((matrixPositionRow - anchorRow + i), (matrixPositionColumn + j));
@@ -139,19 +140,17 @@ public class GameBoard {
         Object[][] shapeMatrix = shape.getShape();
         int anchorRow = shape.getAnchorRow();
 
-        try {
-
-            for (int i = 0; i < board.length * board.length; i++) {
-                for (int j = 0; j < board.length * board.length; j++) {
-
+        for (int i = 0; i < board.length * board.length; i++) {
+            for (int j = 0; j < board.length * board.length; j++) {
+                try {
                     testBlock(shapeMatrix, i, j, anchorRow);
 
                     return true;
+                    
+                } catch (ArrayIndexOutOfBoundsException | ElementAlreadyFilledException e) {
+
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException | ElementAlreadyFilledException e) {
-
-            return false;
         }
 
         return false;
@@ -161,7 +160,7 @@ public class GameBoard {
 
         for (int i = 0; i < shapeMatrix.length; i++) {
             for (int j = 0; j < shapeMatrix[0].length; j++) {
-                if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE)) {
+                if (shapeMatrix[i][j] == null || (shapeMatrix[i][j] == Boolean.FALSE) || shapeMatrix[i][j].equals(false)) {
 
                 } else {
                     testElement((matrixPositionRow - anchorRow + i), (matrixPositionColumn + j));

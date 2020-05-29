@@ -6,6 +6,7 @@
 package Logic;
 
 import Blocks.IShape;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author Miglob
  */
-public enum GameMode {
+public enum GameMode implements Serializable{
     BASIC, ADVANCED;
 
     public List<BlockType> getSupportedShapes() {

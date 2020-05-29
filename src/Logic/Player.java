@@ -7,7 +7,9 @@ package Logic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -26,13 +28,13 @@ public class Player implements Comparable<Player>, Serializable {
     public String getName() {
         return name;
     }
-    
-    public List<Integer> getScores(){
-        
+
+    public List<Integer> getScores() {
+
         List<Integer> scores = new ArrayList<>();
-        
+
         this.games.forEach(game -> scores.add(game.getScore()));
-        
+
         return scores;
     }
 
@@ -75,14 +77,45 @@ public class Player implements Comparable<Player>, Serializable {
             int otherHighScore = player.getHighScore();
 
             if (selfHighScore > otherHighScore) {
-                return 1;
-            } else if (selfHighScore < otherHighScore) {
                 return -1;
+            } else if (selfHighScore < otherHighScore) {
+                return 1;
             } else {
-                return 0;
+                return this.getName().compareTo(player.getName());
             }
         }
         return -1;
+    }
+
+    public void addGame(Game game) {
+
+        if (game != null) {
+            games.add(game);
+        }
+    }
+
+    // compara a game chamado byDate retorna -1 ou 0
+    //apanha o 1º jogo e retorna-o
+    public Game getRecentSavedGame() {
+
+        Comparator<Game> byDate = (game1, game2) -> game1.getDate().compareTo(game2.getDate());
+        if (this.games.size() == 0) {
+            return null;
+        } else if (this.games.size() == 1 && !this.games.get(0).hasTheGameFinished()) {
+            return this.games.get(0);
+        }
+        try {
+            Game game = this.games.stream()
+                    .filter(g -> !g.hasTheGameFinished())
+                    .sorted(byDate)
+                    .findFirst()
+                    .get();
+
+            return game;
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
 }
