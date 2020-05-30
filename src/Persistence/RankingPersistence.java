@@ -25,6 +25,7 @@ public class RankingPersistence {
 
     private Ranking ranking;
 
+        
     private RankingPersistence() {
         this.ranking = new Ranking();
     }
