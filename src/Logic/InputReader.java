@@ -1,21 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Logic;
 
-/**
- *
- * @author Miglob
- */
+
 import java.util.Scanner;
 
-
+/**
+ * Classe que serve para o jogador poder interagir com as perguntas que 
+ * são feitas durante o jogo.
+ * 
+ * @author Miguel Lobato
+ * @version 1.1 (2020.05.20)
+ */
 public class InputReader {
 
     private Scanner reader;
-
+/**
+ * Permitenos escrever para a consola para interagir com as perguntas do jogo.
+ */
     public InputReader() {
         reader = new Scanner(System.in);
     }
@@ -25,7 +26,7 @@ public class InputReader {
      *
      * @param question a pergunta.
      *
-     * @return a linha a seguir á pergunta.
+     * @return a linha a seguir à pergunta.
      */
     public String getText(String question) {
         if (question == null) {
@@ -40,9 +41,9 @@ public class InputReader {
     /**
      * Devolve um inteiro proveniente do teclado.
      *
-     * @param question
+     * @param question a pergunta
      *
-     * @return
+     * @return um inteiro
      */
     public int getInteger(String question) {
         if (question == null) {
@@ -59,9 +60,9 @@ public class InputReader {
     /**
      * Devolve um decimal proveniente do teclado.
      *
-     * @param question
+     * @param question a pergunta
      *
-     * @return
+     * @return um numero real
      */
     public double getDouble(String question) {
         if (question == null) {

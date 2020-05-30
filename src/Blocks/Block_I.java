@@ -1,7 +1,19 @@
+
 package Blocks;
 
+/**
+ * A classe Block_I constroi uma peça com quatro linhas e uma coluna.
+ * 
+ * Herda da classe Shape
+ * 
+ * @author Miguel Lobato
+ * @version 1.1 (2020.05.29)
+ */
 public class Block_I extends Shape {
 
+    /**
+     * Cria uma peça 1x4
+     */
     public Block_I() {
         super(4, 1);
 

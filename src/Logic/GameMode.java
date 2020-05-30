@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Logic;
 
 import Blocks.IShape;
@@ -11,12 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Miglob
+ *Classe que divide as peças que podem ser utilizadas nos dois modos diferentes de jogo.
+ * 
+ * @author Miguel Lobato
+ * @version 1.1 (2020.05.27)
  */
 public enum GameMode implements Serializable{
     BASIC, ADVANCED;
-
+/**
+ * Metodo que faz a distribuição das peças pelos dois diferentes tipos de jogo.
+ * @return uma colecção com as peças consoante o modo de jogo, basico e avançado.
+ */
     public List<BlockType> getSupportedShapes() {
 
         ArrayList<BlockType> blocks = new ArrayList<>();
@@ -56,7 +57,12 @@ public enum GameMode implements Serializable{
                 return null;
         }
     }
-
+/**
+ * Metodo estático para devolver as peças consoante o modo de jogo.
+ * 
+ * @param shape peças criadas através da interface IShape
+ * @return o modo de jogo e as suas peças.
+ */
     public static GameMode getGameModeOfShape(IShape shape) {
 
         List<BlockType> supportedShapes = GameMode.BASIC.getSupportedShapes();

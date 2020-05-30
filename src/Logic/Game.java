@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Logic;
 
 import Blocks.IShape;
@@ -15,8 +11,13 @@ import java.util.List;
 import java.util.Random;
 
 /**
- *
- * @author Miglob
+ * Classe responsável pela gestão das peças durante o jogo.
+ * 
+ * Implementa a interface do Java Serializable.
+ * Retém a data em que o jogo é jogado
+ * 
+ * @author Miguel Lobato
+ * @version 1.1 (2020.05.25)
  */
 public class Game implements Serializable {
 
@@ -25,7 +26,13 @@ public class Game implements Serializable {
     private GameScore score;
     private ArrayList<IShape> playableBlocks;
     private GameMode mode;
-
+/**
+ * Inicializa os elementos necessários para se jogar:
+ * a data a que se começa o jogo, um tabuleiro, a pontuação no jogo,
+ * os blocos disponiveis para jogar e o modo de jogo.
+ * 
+ * @param mode o modo de jogo (basico/avançado)
+ */
     public Game(GameMode mode) {
         date = LocalDateTime.now();
         board = new GameBoard();
@@ -33,7 +40,11 @@ public class Game implements Serializable {
         playableBlocks = new ArrayList<>();
         this.mode = mode;
     }
-
+/**
+ * metodo que nos dá as peças de jogo que estão jogaveis.
+ * 
+ * @return um array com as peças jogaveis
+ */
     public ArrayList<IShape> getPlayableBlocks() {
 
         populatePlayableBlocks();
@@ -71,7 +82,15 @@ public class Game implements Serializable {
             }
         }
     }
-
+/**
+ * Metodo que nos permite utilizar as peças jogaveis e colocá-las na matriz (tabuleiro) do jogo.
+ * 
+ * @param playableBlock uma string que representa o bloco jogável.
+ * @param matrixPosition uma string que representa a posição para onde se quer jogar o bloco.
+ * 
+ * @throws ArrayIndexOutOfBoundsException excepção lançada no caso de se jogar a peça em posições fora da matriz.
+ * @throws ElementAlreadyFilledException excepção lançada se a peça que se joga for posta numa posição já ocupada.
+ */
     public void playBlock(String playableBlock, String matrixPosition) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
 
         IShape block = getPlayableBlock(getPlayableBlockIndex(playableBlock));
@@ -91,7 +110,11 @@ public class Game implements Serializable {
 
         return playableBlock.charAt(0) - a;
     }
-
+/**
+ * Metodo que dá o jogo por terminado quando não cabe mais peças  no tabuleiro
+ * 
+ * @return true se não houver espaço no tabuleiro para as peças que o jogador tem para jogar, false caso contrário.
+ */
     public boolean hasTheGameFinished() {
 
         ArrayList<IShape> playableBlocks1 = getPlayableBlocks();
@@ -106,12 +129,16 @@ public class Game implements Serializable {
 
         return hasFinished;
     }
-
+/**
+ * Metodo que imprime a matriz de jogo
+ */
     public void printGameBoard() {
 
         board.print();
     }
-
+/**
+ * Metodo que imprime na consola de jogo as peças disponiveis, três, numeradas por A, B e C, para o jogador jogar.
+ */
     public void printPlayableBlocks() {
 
         getPlayableBlocks();
@@ -130,12 +157,20 @@ public class Game implements Serializable {
             System.out.println();
         }
     }
-
+/**
+ * Metodo que retorna a hora em que o jogo ocorre
+ * 
+ * @return A data com determinado formato
+ */
     public LocalDateTime getDate(){
         return this.date;
     }
     
-    
+/**
+ * Devolve-nos a pontuação de um jogador.
+ * 
+ * @return um inteiro que dá a pontuação
+ */    
     public int getScore() {
 
         return score.getScore();

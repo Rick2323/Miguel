@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Logic;
 
 import Persistence.RankingPersistence;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
- * @author Miglob
+ *Classe responsável pela criação dos gráficos e pela interacção do jogador na consola.
+ * 
+ * @author Miguel Lobato
+ * @version 1.1 (2020.05.29)
  */
 public class CLI {
 
@@ -21,7 +17,9 @@ public class CLI {
     private GameBoard gameBoard;
     private Ranking ranking;
     private boolean running;
-
+/**
+ * Inicializa o jogador, a matriz do jogo e se está a jogar a null e cria o ranking.
+ */
     public CLI() {
         player = null;
         gameBoard = null;
@@ -54,7 +52,13 @@ public class CLI {
         System.out.println("2 - Iniciar novo jogo - modo avançado");
         System.out.println("0 - Voltar");
     }
-
+/**
+ * Metodo responsável pela interacção do jogo com o jogador.
+ * 
+ * Possui todas as caracteristicas e regras de jogabilidade que o jogo tem de ter,
+ * as várias opções de jogo, os rankings (persistência), modos de jogo
+ * e a saída do jogo.
+ */
     public void run() {
 
         RankingPersistence rankingPersistence = RankingPersistence.getInstance();

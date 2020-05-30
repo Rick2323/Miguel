@@ -3,13 +3,24 @@ package Logic;
 import Blocks.IShape;
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * Classe que trata de criar a matriz que representa o tabuleiro de jogo.
+ * 
+ * Implementa a interface do Java Serializable.
+ * 
+ * Constroi a matriz de jogo juntando 3x3 matrizes mais pequenas (bigSquare).
+ * 
+ * @author Miguel Lobato
+ * @version 1.1 (2020.05.19)
+ */
 public class GameBoard implements Serializable {
 
     private final int BOARD_SIZE = Utils.getSquareSize();
 
     private BigSquare board[][];
-
+/**
+ * Inicializa um objecto BigSquare que representa uma matriz pequena
+ */
     public GameBoard() {
 
         board = new BigSquare[BOARD_SIZE][BOARD_SIZE];
@@ -24,27 +35,22 @@ public class GameBoard implements Serializable {
             }
         }
     }
-
+/**
+ * Metodo que imprime para a consola o cabeçalho que representa as colunas (A, B, C...) e 
+ * o tabuleiro de jogo (matriz grande).
+ * 
+ */
     public void print() {
         printHeader();
         printBody();
-
-//		System.out.println("COL 0\n");
-//		board[0][0].printBody();
-//		board[1][0].printBody();
-//		board[2][0].printBody();
-//
-//		System.out.println("COL 1\n");
-//		board[0][1].printBody();
-//		board[1][1].printBody();
-//		board[2][1].printBody();
-//		
-//		System.out.println("COL 2\n");
-//		board[0][2].printBody();
-//		board[1][2].printBody();
-//		board[2][2].printBody();
     }
-
+/**
+ * Metodo que retorna uma matriz pequena( (BigSquare).
+ * 
+ * @param row um inteiro que representa a linha
+ * @param column um inteiro que representa a coluna
+ * @return  uma matriz pequena
+ */
     public BigSquare getBigSquare(int row, int column) {
         return board[row][column];
     }
@@ -61,7 +67,7 @@ public class GameBoard implements Serializable {
         System.out.println(str);
     }
 
-    private void printBody() { // MACUMBA QUE NEM SEI
+    private void printBody() { 
 
         BigSquare square;
         int increment = 0;
@@ -109,7 +115,15 @@ public class GameBoard implements Serializable {
 
         return matrixPosition.charAt(0) - a;
     }
-
+/**
+ * Metodo que coloca uma peça jogada pelo jogador no tabuleiro segundo as regras do jogo.
+ * 
+ * @param shape peça criada através da interface IShape
+ * @param matrixPosition uma string com a posição a colocar a peça no tabuleiro.
+ * 
+ * @throws ArrayIndexOutOfBoundsException excepção lançada caso a peça seja colocado fora da matriz de jogo
+ * @throws ElementAlreadyFilledException excepção lançada caso a peça seja colocada numa posição já ocupada.
+ */
     public void placeBlock(IShape shape, String matrixPosition) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
 
         Object[][] shapeMatrix = shape.getShape();
@@ -134,7 +148,12 @@ public class GameBoard implements Serializable {
             }
         }
     }
-
+/**
+ * Faz a verificação da peça para ver se cabe no tabuleiro de jogo.
+ * 
+ * @param shape A peça que foi criada através da interface IShape
+ * @return  verdadeiro se a peça couber no tabuleiro, falso caso contrário.
+ */
     public boolean shapeFitsOnGameboard(IShape shape) {
 
         Object[][] shapeMatrix = shape.getShape();
@@ -168,7 +187,11 @@ public class GameBoard implements Serializable {
             }
         }
     }
-
+/**
+ * Metodo que ser para limpar do jogo várias linhas completamente ocupadas.
+ * 
+ * @return um inteiro com a totalidade de elementos limpos.
+ */
     public int clearFilledRows() {
 
         BigSquare square;
@@ -207,7 +230,11 @@ public class GameBoard implements Serializable {
         }
         return clearedElements;
     }
-
+/**
+ * Metodo que ser para limpar do jogo várias colunas completamente ocupadas.
+ * 
+ * @return um inteiro com a quantidade de elementos que foram limpos do tabuleiro.
+ */
     public int clearFilledColumns() {
 
         BigSquare square;
@@ -245,7 +272,11 @@ public class GameBoard implements Serializable {
         }
         return clearedElements;
     }
-
+/**
+ * Metodo que serve para limpar do tabuleiro de jogo um espaço 3x3 ocupado.
+ * 
+ * @return um inteiro com a quantidade de elementos que foram limpos do tabuleiro de jogo.
+ */
     public int clearFilledBigSquares() {
 
         BigSquare square;
