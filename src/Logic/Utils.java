@@ -10,7 +10,7 @@ public class Utils {
 
     private static Utils instance = new Utils();
 
-    // >= 2 SEMPRE
+    // sempre 3
     private static final int SQUARE_SIZE = 3;
 
     private Utils() {
