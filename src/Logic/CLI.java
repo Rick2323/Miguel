@@ -227,7 +227,7 @@ public class CLI {
                     break;
                 default:
 
-                    if (option.matches("([A-Z]-[A-Z][1-9]{1,2})")) {
+                    if (option.matches("([A-Z]-[A-Z][1-9])")) {
 
                         try {
                             split = split(option);

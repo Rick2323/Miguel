@@ -100,6 +100,10 @@ public class BigSquare implements Serializable {
         }
         return column;
     }
+    
+    public Object getElement(int row, int column) {
+		return board[row][column];
+	}
 
 /**
  * Metodo que percorre as linhas e imprime a matriz

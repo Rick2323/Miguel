@@ -13,196 +13,236 @@ import java.util.Random;
 /**
  * Classe responsável pela gestão das peças durante o jogo.
  * 
- * Implementa a interface do Java Serializable.
- * Retém a data em que o jogo é jogado
+ * Implementa a interface do Java Serializable. Retém a data em que o jogo é
+ * jogado
  * 
  * @author Miguel Lobato
  * @version 1.1 (2020.05.25)
  */
 public class Game implements Serializable {
 
-    private LocalDateTime date;
-    private GameBoard board;
-    private GameScore score;
-    private ArrayList<IShape> playableBlocks;
-    private GameMode mode;
-/**
- * Inicializa os elementos necessários para se jogar:
- * a data a que se começa o jogo, um tabuleiro, a pontuação no jogo,
- * os blocos disponiveis para jogar e o modo de jogo.
- * 
- * @param mode o modo de jogo (basico/avançado)
- */
-    public Game(GameMode mode) {
-        date = LocalDateTime.now();
-        board = new GameBoard();
-        score = new GameScore();
-        playableBlocks = new ArrayList<>();
-        this.mode = mode;
-    }
-/**
- * metodo que nos dá as peças de jogo que estão jogaveis.
- * 
- * @return um array com as peças jogaveis
- */
-    public ArrayList<IShape> getPlayableBlocks() {
+	private LocalDateTime date;
+	private GameBoard board;
+	private GameScore score;
+	private ArrayList<IShape> playableBlocks;
+	private GameMode mode;
 
-        populatePlayableBlocks();
+	/**
+	 * Inicializa os elementos necessários para se jogar: a data a que se começa o
+	 * jogo, um tabuleiro, a pontuação no jogo, os blocos disponiveis para jogar e
+	 * o modo de jogo.
+	 * 
+	 * @param mode o modo de jogo (basico/avançado)
+	 */
+	public Game(GameMode mode) {
+		date = LocalDateTime.now();
+		board = new GameBoard();
+		score = new GameScore();
+		playableBlocks = new ArrayList<>();
+		this.mode = mode;
+	}
 
-        return playableBlocks;
-    }
+	/**
+	 * metodo que nos dá as peças de jogo que estão jogaveis.
+	 * 
+	 * @return um array com as peças jogaveis
+	 */
+	public ArrayList<IShape> getPlayableBlocks() {
 
-    private IShape getPlayableBlock(int index) {
-        
-        
-        populatePlayableBlocks();
+		populatePlayableBlocks();
 
-        return playableBlocks.get(index);
-    }
+		return playableBlocks;
+	}
 
-    private void removePlayableBlock(int index){
-        playableBlocks.remove(index);
-    }
-    
-    private void populatePlayableBlocks() {//insere numa lista os blocos que pode jogar
+	private IShape getPlayableBlock(int index) {
 
-        int numberOfShapes = 3;
+		populatePlayableBlocks();
 
-        if (playableBlocks.isEmpty()) {
+		return playableBlocks.get(index);
+	}
 
-            List<BlockType> supportedShapes = mode.getSupportedShapes();
-            Collections.shuffle(supportedShapes);
-            supportedShapes = supportedShapes.subList(0, numberOfShapes);
+	private void removePlayableBlock(int index) {
+		playableBlocks.remove(index);
+	}
 
-            for (BlockType supportedShape : supportedShapes) {
+	private void populatePlayableBlocks() {// insere numa lista os blocos que pode jogar
 
-                IShape createBlock = supportedShape.createBlock();
-                createBlock.rotateMatrixNinetyDegreesClockwise(new Random().nextInt(4));
-                playableBlocks.add(createBlock);
-            }
-        }
-    }
-/**
- * Metodo que nos permite utilizar as peças jogaveis e colocá-las na matriz (tabuleiro) do jogo.
- * 
- * @param playableBlock uma string que representa o bloco jogável.
- * @param matrixPosition uma string que representa a posição para onde se quer jogar o bloco.
- * 
- * @throws ArrayIndexOutOfBoundsException excepção lançada no caso de se jogar a peça em posições fora da matriz.
- * @throws ElementAlreadyFilledException excepção lançada se a peça que se joga for posta numa posição já ocupada.
- */
-    public void playBlock(String playableBlock, String matrixPosition) throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
+		int numberOfShapes = 3;
 
-        IShape block = getPlayableBlock(getPlayableBlockIndex(playableBlock));
+		if (playableBlocks.isEmpty()) {
 
-        board.placeBlock(block, matrixPosition);
-        
-        removePlayableBlock(getPlayableBlockIndex(playableBlock));
+			List<BlockType> supportedShapes = mode.getSupportedShapes();
+			Collections.shuffle(supportedShapes);
+			supportedShapes = supportedShapes.subList(0, numberOfShapes);
 
-        score.increaseScore(GameScore.getPointsForPlacedElement(block));
-        
-        clearFilled();
-    }
+			for (BlockType supportedShape : supportedShapes) {
 
-    private int getPlayableBlockIndex(String playableBlock) {
+				IShape createBlock = supportedShape.createBlock();
+				createBlock.rotateMatrixNinetyDegreesClockwise(new Random().nextInt(4));
+				playableBlocks.add(createBlock);
+			}
+		}
+	}
 
-        char a = 'A';
+	/**
+	 * Metodo que nos permite utilizar as peças jogaveis e colocá-las na matriz
+	 * (tabuleiro) do jogo.
+	 * 
+	 * @param playableBlock  uma string que representa o bloco jogável.
+	 * @param matrixPosition uma string que representa a posição para onde se quer
+	 *                       jogar o bloco.
+	 * 
+	 * @throws ArrayIndexOutOfBoundsException excepção lançada no caso de se
+	 *                                        jogar a peça em posições fora da
+	 *                                        matriz.
+	 * @throws ElementAlreadyFilledException  excepção lançada se a peça que se
+	 *                                        joga for posta numa posição já
+	 *                                        ocupada.
+	 */
+	public void playBlock(String playableBlock, String matrixPosition)
+			throws ArrayIndexOutOfBoundsException, ElementAlreadyFilledException {
 
-        return playableBlock.charAt(0) - a;
-    }
-/**
- * Metodo que dá o jogo por terminado quando não cabe mais peças  no tabuleiro
- * 
- * @return true se não houver espaço no tabuleiro para as peças que o jogador tem para jogar, false caso contrário.
- */
-    public boolean hasTheGameFinished() {
+		IShape block = getPlayableBlock(getPlayableBlockIndex(playableBlock));
 
-        ArrayList<IShape> playableBlocks1 = getPlayableBlocks();
-        boolean hasFinished = true;
+		board.placeBlock(block, matrixPosition);
 
-        for (IShape shape : playableBlocks1) {
+		removePlayableBlock(getPlayableBlockIndex(playableBlock));
 
-            if (board.shapeFitsOnGameboard(shape)) {
-                hasFinished = false;
-            }
-        }
+		score.increaseScore(GameScore.getPointsForPlacedElement(block));
 
-        return hasFinished;
-    }
-/**
- * Metodo que imprime a matriz de jogo
- */
-    public void printGameBoard() {
+		clearFilled();
+	}
 
-        board.print();
-    }
-/**
- * Metodo que imprime na consola de jogo as peças disponiveis, três, numeradas por A, B e C, para o jogador jogar.
- */
-    public void printPlayableBlocks() {
+	private int getPlayableBlockIndex(String playableBlock) {
 
-        getPlayableBlocks();
+		char a = 'A';
 
-        char a = 'A';
+		return playableBlock.charAt(0) - a;
+	}
 
-        System.out.println("Blocos a jogar: ");
+	/**
+	 * Metodo que dá o jogo por terminado quando não cabe mais peças no tabuleiro
+	 * 
+	 * @return true se não houver espaço no tabuleiro para as peças que o jogador
+	 *         tem para jogar, false caso contrário.
+	 */
+	public boolean hasTheGameFinished() {
 
-        for (int i = 0; i < this.playableBlocks.size(); i++) {
+		ArrayList<IShape> playableBlocks1 = getPlayableBlocks();
+		boolean hasFinished = true;
 
-            IShape playableBlock = this.playableBlocks.get(i);
-            char temp = (char) (a + i);
-            System.out.println("Bloco " + temp);
+		for (IShape shape : playableBlocks1) {
 
-            playableBlock.printBody();
-            System.out.println();
-        }
-    }
-/**
- * Metodo que retorna a hora em que o jogo ocorre
- * 
- * @return A data com determinado formato
- */
-    public LocalDateTime getDate(){
-        return this.date;
-    }
-    
-/**
- * Devolve-nos a pontuação de um jogador.
- * 
- * @return um inteiro que dá a pontuação
- */    
-    public int getScore() {
+			if (board.shapeFitsOnGameboard(shape)) {
+				hasFinished = false;
+			}
+		}
 
-        return score.getScore();
-    }
+		return hasFinished;
+	}
 
-    private void clearFilledRows() {
+	/**
+	 * Metodo que imprime a matriz de jogo
+	 */
+	public void printGameBoard() {
 
-        int clearedElements = board.clearFilledRows();
+		board.print();
+	}
 
-        score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, false));
-    }
+	public Object[][] getMatrix() {
+		return board.getMatrix();
+	}
 
-    private void clearFilledColumns() {
+	/**
+	 * Metodo que imprime na consola de jogo as peças disponiveis, três, numeradas
+	 * por A, B e C, para o jogador jogar.
+	 */
+	public void printPlayableBlocks() {
 
-        int clearedElements = board.clearFilledColumns();
+		getPlayableBlocks();
 
-        score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, false));
+		char a = 'A';
 
-    }
+		System.out.println("Blocos a jogar: ");
 
-    private void clearFilledSquares() {
+		for (int i = 0; i < this.playableBlocks.size(); i++) {
 
-        int clearedElements = board.clearFilledBigSquares();
+			IShape playableBlock = this.playableBlocks.get(i);
+			char temp = (char) (a + i);
+			System.out.println("Bloco " + temp);
 
-        score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, true));
-    }
-    
-    private void clearFilled(){
-        
-        clearFilledRows();
-        clearFilledColumns();
-        clearFilledSquares();
-    }
+			playableBlock.printBody();
+			System.out.println();
+		}
+	}
+	
+	public String printPlayableBlocksText() {
+
+		getPlayableBlocks();
+
+		char a = 'A';
+		String txt = "";
+
+		txt += "Blocos a jogar: \n";
+				
+		for (int i = 0; i < this.playableBlocks.size(); i++) {
+
+			IShape playableBlock = this.playableBlocks.get(i);
+			char temp = (char) (a + i);
+			txt += "Bloco " + temp + "\n";
+
+			txt += playableBlock.printBodyText() + "\n";
+		}
+		
+		return txt;
+	}
+
+	/**
+	 * Metodo que retorna a hora em que o jogo ocorre
+	 * 
+	 * @return A data com determinado formato
+	 */
+	public LocalDateTime getDate() {
+		return this.date;
+	}
+
+	/**
+	 * Devolve-nos a pontuação de um jogador.
+	 * 
+	 * @return um inteiro que dá a pontuação
+	 */
+	public int getScore() {
+
+		return score.getScore();
+	}
+
+	private void clearFilledRows() {
+
+		int clearedElements = board.clearFilledRows();
+
+		score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, false));
+	}
+
+	private void clearFilledColumns() {
+
+		int clearedElements = board.clearFilledColumns();
+
+		score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, false));
+
+	}
+
+	private void clearFilledSquares() {
+
+		int clearedElements = board.clearFilledBigSquares();
+
+		score.increaseScore(GameScore.getPointsForClearedElement(clearedElements, true));
+	}
+
+	private void clearFilled() {
+
+		clearFilledRows();
+		clearFilledColumns();
+		clearFilledSquares();
+	}
 
 }
