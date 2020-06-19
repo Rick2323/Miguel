@@ -1,15 +1,10 @@
 package Views;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javax.xml.soap.Text;
-import java.util.ArrayList;
-import java.util.Random;
 import javafx.application.Application;
 
 public class Coisa extends Application {
