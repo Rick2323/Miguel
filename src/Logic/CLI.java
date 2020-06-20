@@ -28,13 +28,13 @@ public class CLI {
 
     }
 
-    private void printWelcomeScreen() {
+    private void printWelcomeScreen() { //*
 
         System.out.println("Bem-Vindo ao BlockuDoku!!!\n");
         System.out.println("Insira o seu nome. (Pressione a tecla Enter)");
     }
 
-    private void printMainScreen() {
+    private void printMainScreen() { //*
 
         System.out.println("Olá " + player.getName());
         System.out.println();
@@ -46,7 +46,7 @@ public class CLI {
         System.out.println("0 - Sair");
     }
 
-    private void printNewGameScreen() {
+    private void printNewGameScreen() { //*
 
         System.out.println("1 - Iniciar novo jogo - modo básico");
         System.out.println("2 - Iniciar novo jogo - modo avançado");
@@ -59,7 +59,7 @@ public class CLI {
  * as várias opções de jogo, os rankings (persistência), modos de jogo
  * e a saída do jogo.
  */
-    public void run() {
+    public void run() { //*
 
         RankingPersistence rankingPersistence = RankingPersistence.getInstance();
 
@@ -113,7 +113,7 @@ public class CLI {
         }
     }
 
-    private void newGame() {
+    private void newGame() { //*
 
         printNewGameScreen();
 
@@ -183,7 +183,7 @@ public class CLI {
         this.running = false;
     }
 
-    private void printInvalidInput() {
+    private void printInvalidInput() { //*
 
         System.out.println("Input inválido!");
     }
@@ -193,7 +193,7 @@ public class CLI {
         System.out.println("Obrigado por ter jogado BlockuDoku!!!!");
     }
 
-    private void newGame(GameMode gameMode) {
+    private void newGame(GameMode gameMode) { //*
 
         Game game = new Game(gameMode);
         this.player.addGame(game);

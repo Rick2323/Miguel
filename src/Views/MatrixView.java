@@ -11,22 +11,48 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import Logic.Utils;
 
-public class Matrix {
+public class MatrixView {
 
 	int SIZE = Utils.getSquareSize() * Utils.getSquareSize();
 	int length = SIZE;
 	int width = SIZE;
 
-	GridPane topHeader = new GridPane();
-	GridPane sideHeader = new GridPane();
-	GridPane root = new GridPane();
+	private GridPane topHeader = new GridPane();
+	private GridPane sideHeader = new GridPane();
+	private GridPane root = new GridPane();
+	private VBox vBox = new VBox();
+	private HBox hBox = new HBox();
 
-	public Matrix() {
+	public MatrixView() {
+		
 		setUpTopHeader();
 		setUpSideHeader();
-		setUpRoot();
+		setUpRoot();		
+
+		vBox.getChildren().add(topHeader);
+		vBox.getChildren().add(root);
+		hBox.getChildren().add(sideHeader);
+		hBox.getChildren().add(vBox);
+	}	
+
+	public Pane getPane() {
+
+		return hBox;
 	}
 
+	public void updateMatrix(Object[][] matrix) {
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+
+				boolean filled = ((boolean) matrix[i][j]);
+
+				String icon = (filled ? "X" : "");
+				fillElement(i, j, "" + icon, filled);
+			}
+		}
+	}
+	
 	private void setUpTopHeader() {
 
 		char alphabet = 'A';
@@ -95,30 +121,6 @@ public class Matrix {
 				root.setRowIndex(tf, y);
 				root.setColumnIndex(tf, x);
 				root.getChildren().add(tf);
-			}
-		}
-	}
-
-	public Pane getPane() {
-		VBox vBox = new VBox();
-		vBox.getChildren().add(topHeader);
-		vBox.getChildren().add(root);
-		HBox hBox = new HBox();
-		hBox.getChildren().add(sideHeader);
-		hBox.getChildren().add(vBox);
-
-		return hBox;
-	}
-
-	public void updateMatrix(Object[][] matrix) {
-
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix.length; j++) {
-
-				boolean filled = ((boolean) matrix[i][j]);
-
-				String icon = (filled ? "X" : "");
-				fillElement(i, j, "" + icon, filled);
 			}
 		}
 	}
