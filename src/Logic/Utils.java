@@ -8,31 +8,32 @@ package Logic;
  */
 public class Utils {
 
-    private static Utils instance = new Utils();
+	private static Utils instance = new Utils();
 
-    // sempre 3
-    private static final int SQUARE_SIZE = 3;
-    
-    private Player player = null;
-    private GameBoard gameBoard = null;
-    private Ranking ranking = new Ranking();
-    private boolean running = false;
+	// sempre 3
+	private static final int SQUARE_SIZE = 3;
 
-    private Utils() {
+	private Player player = null;
+	private GameBoard gameBoard = null;
+	private Ranking ranking = new Ranking();
+	private boolean running = false;
 
-    }
+	private Utils() {
 
-    public static Utils getInstance() {
+	}
+
+	public static Utils getInstance() {
 		return instance;
 	}
-    /**
-     * Metodo que retorna o tamanho da matriz
-     *
-     * @return um inteiro que representa o tamanho da matriz
-     */
-    public static int getSquareSize() {
-        return SQUARE_SIZE;
-    }
+
+	/**
+	 * Metodo que retorna o tamanho da matriz
+	 *
+	 * @return um inteiro que representa o tamanho da matriz
+	 */
+	public static int getSquareSize() {
+		return SQUARE_SIZE;
+	}
 
 	public Player getPlayer() {
 		return player;

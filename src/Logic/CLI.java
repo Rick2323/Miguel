@@ -146,7 +146,7 @@ public class CLI {
        
     }
 
-    private void showPersonalScores() {
+    private void showPersonalScores() { //*
 
         if (this.player != null) {
             System.out.println("**** RESULTADOS ****");
@@ -157,7 +157,7 @@ public class CLI {
         }
     }
 
-    private void showTop10() {
+    private void showTop10() { //*
 
         Map<Player, Integer> top10 = ranking.getTop10();
 
@@ -177,7 +177,7 @@ public class CLI {
         }
     }
 
-    private void exit() {
+    private void exit() { //*
 
         printGoodByeScreen();
         this.running = false;
@@ -188,7 +188,7 @@ public class CLI {
         System.out.println("Input inválido!");
     }
 
-    private void printGoodByeScreen() {
+    private void printGoodByeScreen() { //*
 
         System.out.println("Obrigado por ter jogado BlockuDoku!!!!");
     }
@@ -201,7 +201,7 @@ public class CLI {
         playGame(game);
     }
 
-    private void playGame(Game game) {
+    private void playGame(Game game) { //*
 
         boolean gameRunning = !game.hasTheGameFinished();
 
@@ -256,7 +256,7 @@ public class CLI {
 
     }
 
-    private void printGameState(Game game) {
+    private void printGameState(Game game) { //*
 
         if (game != null) {
             game.printGameBoard();
@@ -264,7 +264,7 @@ public class CLI {
         }
     }
 
-    private String[] split(String option) {
+    private String[] split(String option) { //*
 
         String[] parts = option.split("-");
 
